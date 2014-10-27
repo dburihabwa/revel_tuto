@@ -1,0 +1,26 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<div class="login-panel">
+  <div class="background" style="background-image: url(https://www.mymajorcompany.com/mmcMediaPlugin/media/cache/5/3/8/2/f/5382f2a60ee5953f0aa7800ca6866b820030359f.jpeg)">
+  </div>
+  <div class="form-panel">
+    <h1 class="text-center">Se connecter</h1>
+    {{template "flash.html" .}}
+    <form class="form-signin" role="form" action="{{url "User.Login"}}" id="formLogin" method="POST">
+      <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="username" size="19" value="{{.flash.username}}" />
+      <input type="password" class="form-control" placeholder="Mot de passe" required="" size="19" name="password" value="{{.flash.password}}"/>
+      <label class="checkbox">
+        <input type="checkbox" name="remember" value="true"/> Je souvenir de moi
+      </label>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+    </form>
+
+    <p>
+      <a href="{{url "User.Register"}}">S'enregistrer</a> • <a href="{{url "User.Register"}}">Mot de passe oublié</a>
+    </p>
+  </div>
+  <div class="clear"></div>
+</div>
+
+{{template "footer.html" .}}

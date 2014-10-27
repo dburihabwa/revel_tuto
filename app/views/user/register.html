@@ -1,0 +1,83 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<div class="login-panel">
+  <div class="background" style="background-image: url(https://www.mymajorcompany.com/mmcMediaPlugin/media/cache/5/3/8/2/f/5382f2a60ee5953f0aa7800ca6866b820030359f.jpeg)">
+  </div>
+  <div class="form-panel">
+    <h1 class="text-center">S'inscrire</h1>
+    <form role="form" action="{{url "User.SaveUser"}}" id="formRegister" method="POST">
+      {{with $field := field "user.Username" .}}
+        <div class="form-group {{$field.ErrorClass}}">
+          <label for="{{$field.Name}}" class="required">Username</label>
+          <input 
+            class="form-control"
+            id="{{$field.Name}}" name="{{$field.Name}}"
+            type="text" 
+            value="{{$field.Flash}}"
+            required="required"
+            placeholder="Username"
+            autofocus="">
+          <span class="error">{{$field.Error}}</span>
+        </div>
+      {{end}}
+      {{with $field := field "user.FirstName" .}}
+        <div class="form-group {{$field.ErrorClass}}">
+          <label for="{{$field.Name}}" class="required">Prénom</label>
+          <input 
+            class="form-control"
+            id="{{$field.Name}}" name="{{$field.Name}}"
+            type="text" 
+            value="{{$field.Flash}}"
+            required="required"
+            placeholder="Prénom">
+          <span class="error">{{$field.Error}}</span>
+        </div>
+      {{end}}
+      {{with $field := field "user.LastName" .}}
+        <div class="form-group {{$field.ErrorClass}}">
+          <label for="{{$field.Name}}" class="required">Nom</label>
+          <input 
+            class="form-control"
+            id="{{$field.Name}}" name="{{$field.Name}}"
+            type="text" 
+            value="{{$field.Flash}}"
+            required="required"
+            placeholder="Nom">
+          <span class="error">{{$field.Error}}</span>
+        </div>
+      {{end}}
+      {{with $field := field "user.Password" .}}
+        <div class="form-group {{$field.ErrorClass}}">
+          <label for="{{$field.Name}}" class="required">Mot de passe</label>
+          <input 
+            class="form-control"
+            id="{{$field.Name}}" name="{{$field.Name}}"
+            type="password" 
+            value="{{$field.Flash}}"
+            required="required"
+            placeholder="Mot de passe">
+          <span class="error">{{$field.Error}}</span>
+        </div>
+      {{end}}
+      {{with $field := field "verifyPassword" .}}
+        <div class="form-group {{$field.ErrorClass}}">
+          <label for="{{$field.Name}}" class="required">Confirmer le mot de passe</label>
+          <input 
+            class="form-control"
+            id="{{$field.Name}}" name="{{$field.Name}}"
+            type="password" 
+            value="{{$field.Flash}}"
+            required="required"
+            placeholder="Confirmer le mot de passe">
+          <span class="error">{{$field.Error}}</span>
+        </div>
+      {{end}}
+      <p class="buttons">
+        <input type="submit" value="Enregistrer" class="btn btn-primary"> <a href="{{url "Application.Index"}}">Annuler</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+{{template "footer.html" .}}

@@ -1,0 +1,12 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<div class="container">
+  <h1>Profile {{.user.Username}}</h1>
+
+  Username: {{.user.Username}}<br>
+  Prénom: {{.user.FirstName}}<br>
+  Nom: {{.user.LastName}}<br>
+</div>
+
+{{template "footer.html" .}}
