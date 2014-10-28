@@ -5,7 +5,7 @@ mkdir ~/gocode
 touch ~/.gorc
 GOPATH=~/gocode
 export GOPATH=$GOPATH
-echo "export GOPATH=~/$GOPATH" > ~/.gorc
+echo "export GOPATH=$GOPATH" > ~/.gorc
 
 echo "go get github.com/revel/revel"
 go get github.com/revel/revel
