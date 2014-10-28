@@ -1,0 +1,170 @@
+html, body {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.clear {
+  clear: both;
+}
+/* Menu */
+.navbar {
+  margin: 0;
+  border-bottom: 2px solid #4D4DC2;
+}
+/* Footer */
+footer {
+  border-top: 1px solid #DFDFDF;
+  padding: 15px 25px 10px 25px;
+}
+
+footer li a, footer li span {
+  display: block;
+  color: #727272;
+  font-size: 15px;
+  padding: 5px 20px;
+}
+
+.login-panel {
+  position: relative;
+  overflow: auto;
+  min-height: 80%;
+  padding: 50px 0 30px 0;
+}
+
+.login-panel .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.login-panel .form-panel {
+  position: relative;
+  margin: auto;
+  padding: 15px;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.highlight-project {
+  margin: 5px;
+  border: 1px solid #ddd;
+}
+.highlight-project img {
+  width: 100%;
+  min-height: 50px;
+}
+.highlight-project h2 {
+  font-weight: normal;
+}
+.highlight-project p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.highlight-project .progress {
+  margin: 0 10px;
+}
+.highlight-project .progress .progress-bar {
+  background: #4D4DC2;
+}
+.progress-procent {
+    font-weight: bold;
+    float: left;
+    padding-left: 10px;
+    padding-top: 7px;
+}
+
+.progress-date {
+    font-weight: bold;
+    float: right;
+    padding-right: 10px;
+    padding-top: 7px;
+}
+
+.progress-money {
+    font-weight: bold;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-bottom: 7px;
+}
+
+/* Carousel base class */
+.carousel {
+  position: relative;;
+  height: 500px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 500px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+.carousel-over {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  line-height: 500px;
+  text-align: center;
+}
