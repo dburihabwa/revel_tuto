@@ -97,6 +97,8 @@ footer li a, footer li span {
 .highlight-project {
   margin: 5px;
   border: 1px solid #ddd;
+  min-height: 410px;
+  overflow: hidden;
 }
 .highlight-project img {
   width: 100%;
@@ -104,10 +106,14 @@ footer li a, footer li span {
 }
 .highlight-project h2 {
   font-weight: normal;
+  margin: 0;
+  padding: 4px;
 }
-.highlight-project p {
+.highlight-project p.description {
   margin-right: 10px;
   margin-left: 10px;
+  height: 112px;
+  overflow: hidden;
 }
 .highlight-project .progress {
   margin: 0 10px;

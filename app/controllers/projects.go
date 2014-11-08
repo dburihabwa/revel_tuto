@@ -22,6 +22,10 @@ func (c Projects) List() revel.Result {
 	for _, r := range results {
 		b := r.(*models.Project)
 		b.Pledged = 0
+		results, err := c.Txn.SelectInt("select sum(amount) from transaction WHERE project_id=?", b.Id)
+		if err == nil {
+			b.Pledged = results
+		}
 		projects = append(projects, b)
 	}
 

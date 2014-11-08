@@ -5,12 +5,13 @@
   <div class="row">
     <div class="col-md-9">
       <h2>Projets</h2>
+      <div class="row">
       {{range .projects}}
       <div class="col-sm-4">
         <div class="highlight-project">
           <img src="http://dummyimage.com/100x50/454545/fff.png" alt="Generic placeholder image">
           <h2>{{.Title}}</h2>
-          <p>{{.Description}}</p>
+          <p class="description">{{.Description}}</p>
           <div class="progress-money">{{.Pledged}} €</div>
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="{{procent .Amount .Pledged}}" aria-valuemin="0" aria-valuemax="100" style="width: {{procent .Amount .Pledged}}%;">
@@ -24,8 +25,6 @@
         </div>
       </div><!-- /.col-lg-4 -->
       {{end}}
-      <div class="row">
-        
       </div>
     </div>
   </div>
