@@ -72,7 +72,7 @@ func defineTable(dbm *gorp.DbMap) {
 	offer := dbm.AddTable(models.Offer{}).SetKeys(true, "id")
 	offer.ColMap("description").SetMaxSize(1500)
 
-	//transaction := dbm.AddTable(models.Transaction{}).SetKeys(true, "id")
+	dbm.AddTable(models.Transaction{}).SetKeys(true, "id")
 }
 
 type GorpController struct {
