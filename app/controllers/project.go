@@ -3,6 +3,8 @@ package controllers
 import (
 	"github.com/revel/revel"
 	"going/app/models"
+	"going/app/routes"
+	"time"
 )
 
 type Project struct {
@@ -18,6 +20,10 @@ func (c Project) AddProject() revel.Result {
 }
 
 func (c Project) SaveProject(project models.Project) revel.Result {
-
-	return nil
+	project.CreationDate = time.Now()
+    err := c.Txn.Insert(&project)
+    if err != nil {
+    	panic(err)
+    }
+    return c.Redirect(routes.Projects.List())
 }
