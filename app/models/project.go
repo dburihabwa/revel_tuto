@@ -11,6 +11,7 @@ type Project struct {
 	Title           string    `db:"title" json:"title"`
 	Description     string    `db:"description" json:"description"`
 	OwnerId			int64     `db:"owner" json:"owner"`
+	Amount			int64	  `db:"amount" json: "amount"`
 	PublicationDate time.Time `db:"pubication_date" json:"pubication_date"`
 	CreationDate    time.Time `db:"creation_date" json:"creation_date"`
 	ExpirationDate  time.Time `db:"expiration_date" json:"expiration_date"`
@@ -30,5 +31,9 @@ func (project *Project) Validate(v *revel.Validation) {
 	v.Check(project.Description,
 		revel.Required{},
 		revel.MaxSize{1500},
+	)
+
+	v.Check(project.Amount,
+		revel.Required{},
 	)
 }

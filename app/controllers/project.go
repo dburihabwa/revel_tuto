@@ -31,6 +31,15 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 	if user == nil {
 		return c.Render(routes.Application.Index)
 	}
+	
+	project.Validate(c.Validation)
+
+	if c.Validation.HasErrors()  {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Project.AddProject())
+	}
+
 	project.OwnerId = user.Id
 	project.CreationDate = time.Now()
 	publicationDate, errPublicationParsing := MakeTime(publicationYear, publicationMonth, publicationDay)
@@ -46,6 +55,10 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 	if project.PublicationDate.After(project.ExpirationDate) {
 		panic(errors.New("La date d'expiration est antérieure à la date de publication!"))
 	}
+	if project.CreationDate.After(project.ExpirationDate) {
+		panic(errors.New("Le date d'expiration de la campagne est antérieure à la date d'aujourd'hui!"))
+	}
+
     err := c.Txn.Insert(&project)
     if err != nil {
     	panic(err)
