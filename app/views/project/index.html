@@ -1,15 +1,35 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <div class="hero-text">
-        <h1>Project</h1>
-        <p></p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <h2>{{.project.Title}}</h2>
+      <div class="author">par {{.owner.FirstName}} {{.owner.LastName}}</div>
+      <div class="illustration">
+          <img src="http://dummyimage.com/100x50/454545/fff.png" alt="Generic placeholder image">
+      </div>
+      <div class="description">
+      {{md .project.Description}}
       </div>
     </div>
+    <div class="col-md-3">
+    <h3 class="contributor">{{.nbPledge}}</h3>
+    <span class="subtitle">Contributeurs</span>
+    <h3 class="pledged">{{.pledged}}€</h3>
+    <span>promis</span>
+    <h3 class="pledged">{{.project.Amount}}€</h3>
+    <span>objectif</span>
+    <h3 class="days">{{dayLeft  .project.ExpirationDate}}</h3>
+    <span>jours restants</span>
+    <h2>Contribuer</h2>
+    <form class="form-signin" role="form" action="{{url "Project.Reward"}}" method="POST">
+        <input type="hidden" name="projectId" value="{{.project.Id}}">
+        <input type="integer" class="form-control" placeholder="Montant" required="" autofocus="" name="amount" size="19" value="{{.flash.amount}}" autofocus/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button>
+    </form>
+    </div>
   </div>
-</header>
+</div>
 
 {{template "footer.html" .}}

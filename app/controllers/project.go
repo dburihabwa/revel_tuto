@@ -13,7 +13,50 @@ type Project struct {
 }
 
 func (c Project) Index(Id int64) revel.Result {
-	return c.Render()
+	c.connected()
+
+	obj, err := c.Txn.Get(models.Project{}, Id)
+	project := obj.(*models.Project)
+
+	if err != nil {
+		return c.NotFound("Project not found.")
+	}
+
+	results, err := c.Txn.SelectInt("select count(DISTINCT user_id) from transaction WHERE project_id=?", Id)
+	var nbPledge int64 = 0
+	if err == nil {
+		nbPledge = results
+	}
+
+	sumResults, err := c.Txn.SelectInt("select sum(amount) from transaction WHERE project_id=?", Id)
+	var pledged int64 = 0
+	if err == nil {
+		pledged = sumResults
+	}
+
+	ownerResult, err := c.Txn.Get(models.User{}, project.OwnerId)
+	owner := ownerResult.(*models.User)
+
+	return c.Render(project, nbPledge, pledged, owner)
+}
+
+func (c Project) Reward(transaction models.Transaction, amount int64, projectId int64) revel.Result {
+	user := c.connected()
+	if user == nil {
+		return c.RenderText("Not conected")
+	}
+
+	transaction.UserId = user.Id
+	transaction.ProjectId = projectId
+	transaction.Amount = amount
+	transaction.Date = time.Now()
+
+	err := c.Txn.Insert(&transaction)
+	if err != nil {
+		panic(err)
+	}
+
+	return c.Redirect(routes.Project.Index(projectId))
 }
 
 func (c Project) AddProject() revel.Result {

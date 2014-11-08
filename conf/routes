@@ -8,6 +8,7 @@ GET     /                                       Application.Index
 GET     /projects                               Projects.List
 GET     /project/:Id                            Project.Index
 POST    /project/save                           Project.SaveProject
+POST    /project/reward                         Project.Reward
 
 Get     /login                                  User.LoginPage
 POST    /login                                  User.Login

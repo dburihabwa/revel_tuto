@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/revel/revel"
+	"github.com/russross/blackfriday"
+	T "html/template"
 	"time"
 )
 
@@ -23,5 +26,11 @@ func init() {
 
 	revel.TemplateFuncs["procent"] = func(a int64, b int64) float64 {
 		return (float64(b) / float64(a)) * 100
+	}
+
+	revel.TemplateFuncs["md"] = func(markdown string) T.HTML {
+		unsafe := blackfriday.MarkdownCommon([]byte(markdown))
+		html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+		return T.HTML(html)
 	}
 }

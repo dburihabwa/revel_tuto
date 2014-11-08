@@ -12,7 +12,8 @@ type Transaction struct {
 	User      User      `db:"-"`
 	ProjectId int64     `db:"project_id" json:"project_id"`
 	Project   Project   `db:"-"`
-	date      time.Time `db:"date" json:"date"`
+	Date      time.Time `db:"date" json:"date"`
+	Amount    int64     `db:"amount" json:"amount"`
 }
 
 func (u *Transaction) String() string {
