@@ -13,7 +13,7 @@ type Project struct {
 	AbstractController
 }
 
-func (c Project) Index(id string) revel.Result {
+func (c Project) Index(Id int64) revel.Result {
 	return c.Render()
 }
 
@@ -26,15 +26,15 @@ func (c Project) AddProject() revel.Result {
 }
 
 func (c Project) SaveProject(project models.Project, publicationDay string, publicationMonth string, publicationYear string,
-		expirationDay string, expirationMonth string, expirationYear string) revel.Result {
+	expirationDay string, expirationMonth string, expirationYear string) revel.Result {
 	user := c.connected()
 	if user == nil {
 		return c.Render(routes.Application.Index)
 	}
-	
+
 	project.Validate(c.Validation)
 
-	if c.Validation.HasErrors()  {
+	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(routes.Project.AddProject())
@@ -59,13 +59,12 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 		panic(errors.New("Le date d'expiration de la campagne est antérieure à la date d'aujourd'hui!"))
 	}
 
-    err := c.Txn.Insert(&project)
-    if err != nil {
-    	panic(err)
-    }
-    return c.Redirect(routes.Projects.List())
+	err := c.Txn.Insert(&project)
+	if err != nil {
+		panic(err)
+	}
+	return c.Redirect(routes.Project.Index(project.Id))
 }
-
 
 func MakeTime(yearString string, monthString string, dayString string) (time.Time, error) {
 	day, errParseDay := ParseStringToInt(dayString)

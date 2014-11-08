@@ -6,7 +6,7 @@ module:testrunner
 
 GET     /                                       Application.Index
 GET     /projects                               Projects.List
-GET     /project/:id                            Project.Index
+GET     /project/:Id                            Project.Index
 POST    /project/save                           Project.SaveProject
 
 Get     /login                                  User.LoginPage
