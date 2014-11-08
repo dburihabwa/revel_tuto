@@ -10,6 +10,7 @@ type Project struct {
 	Id              int64     `db:"id" json:"id"`
 	Title           string    `db:"title" json:"title"`
 	Description     string    `db:"description" json:"description"`
+	OwnerId			int64     `db:"owner" json:"owner"`
 	PublicationDate time.Time `db:"pubication_date" json:"pubication_date"`
 	CreationDate    time.Time `db:"creation_date" json:"creation_date"`
 	ExpirationDate  time.Time `db:"expiration_date" json:"expiration_date"`
