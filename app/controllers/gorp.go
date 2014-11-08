@@ -33,7 +33,7 @@ func getConnectionString() string {
 	pass := getParamString("db.password", "root")
 	dbname := getParamString("db.name", "going")
 	protocol := getParamString("db.protocol", "tcp")
-	dbargs := getParamString("dbargs", " ")
+	dbargs := getParamString("dbargs", "parseTime=true")
 
 	if strings.Trim(dbargs, " ") != "" {
 		dbargs = "?" + dbargs
