@@ -1,172 +1,208 @@
 {{set . "title" "Add project"}}
+{{append . "moreScripts" "js/editor/marked.js"}}
+{{append . "moreScripts" "js/editor/editor.js"}}
+{{append . "moreScripts" "js/projectEditor.js"}}
+{{append . "moreStyles" "js/editor/style.css"}}
 {{template "header.html" .}}
 
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <div class="hero-text">
-        <h1>Créer votre projet</h1>
-      </div>
-    </div>
-  </div>
-</header>
-<div class="login-panel">
-    <div class = "form-panel">
-        <h1>Créer votre projet</h1>
-        <p>C'est ici que vous lancerez votre projet!</p>
-        <form role = "form" method = "POST" action = "{{url "Project.SaveProject"}}">
-            <label for = "title">Titre du projet</label>
-            <br/>
-            <input id = "title" name = "project.Title" type = "text" />
-            <br/>
-            <label for = "amount">Montant</label>
-            <br/>
-            <input id = "amount" name = "project.Amount" type = "number" value = "1" step = "1" min = "0" max = "1000000000" />
-            <br/>
-            <label for = "description">Description</label>
-            <br/>
-            <textarea id = "description" name = "project.Description" cols = "50" rows = "5" ></textarea>
-            <label>Date de publication</label>
-            <br/>
-            <select name = "publicationDay" required>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-                <option>21</option>
-                <option>22</option>
-                <option>23</option>
-                <option>24</option>
-                <option>25</option>
-                <option>26</option>
-                <option>27</option>
-                <option>28</option>
-                <option>29</option>
-                <option>30</option>
-                <option>31</option>
-            </select>
-            <select name = "publicationMonth" required>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-            </select>
-            <select name = "publicationYear" required>
-                <option>2014</option>
-                <option>2015</option>
-                <option>2016</option>
-                <option>2017</option>
-                <option>2018</option>
-                <option>2019</option>
-                <option>2020</option>
-                <option>2021</option>
-                <option>2022</option>
-                <option>2023</option>
-                <option>2024</option>
-                <option>2025</option>
-                <option>2026</option>
-                <option>2027</option>
-                <option>2028</option>
-                <option>2029</option>
-                <option>2030</option>
-            </select>
-            <hr/>
-            <label>Date d'expiration</label>
-            <br/>
-            <select name = "expirationDay" required>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-                <option>21</option>
-                <option>22</option>
-                <option>23</option>
-                <option>24</option>
-                <option>25</option>
-                <option>26</option>
-                <option>27</option>
-                <option>28</option>
-                <option>29</option>
-                <option>30</option>
-                <option>31</option>
-            </select>
-            <select name = "expirationMonth" required>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-            </select>
-            <select name = "expirationYear" required>
-                <option>2014</option>
-                <option>2015</option>
-                <option>2016</option>
-                <option>2017</option>
-                <option>2018</option>
-                <option>2019</option>
-                <option>2020</option>
-                <option>2021</option>
-                <option>2022</option>
-                <option>2023</option>
-                <option>2024</option>
-                <option>2025</option>
-                <option>2026</option>
-                <option>2027</option>
-                <option>2028</option>
-                <option>2029</option>
-                <option>2030</option>
-            </select>
-            <hr/>
-            <input type = "submit" value = "Créer projet" />
-        </form>
-    </div>
+<div class="container">
+    <h1>Créer votre projet</h1>
+    <p>C'est ici que vous lancerez votre projet!</p>
+    <form role = "form" method = "POST" action = "{{url "Project.SaveProject"}}">
+        {{with $field := field "project.Title" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+              <label for="{{$field.Name}}" class="required">Titre</label>
+              <input 
+                class="form-control"
+                id="{{$field.Name}}" name="{{$field.Name}}"
+                type="text" 
+                value="{{$field.Flash}}"
+                required="required"
+                placeholder="Titre"
+                autofocus="">
+              <span class="error">{{$field.Error}}</span>
+            </div>
+        {{end}}
+        {{with $field := field "project.Amount" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+              <label for="{{$field.Name}}" class="required">Titre</label>
+              <div class="input-group">
+                  <input 
+                    class="form-control"
+                    id="{{$field.Name}}" name="{{$field.Name}}"
+                    type="integer" 
+                    value="{{$field.Flash}}"
+                    required="required"
+                    placeholder="Montant">
+                  <div class="input-group-addon">€</div>
+              </div>
+              <span class="error">{{$field.Error}}</span>
+            </div>
+        {{end}}
+
+        {{with $field := field "project.PublicationDate" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+                <label for="{{$field.Name}}" class="required">Date de publication</label>
+                <div class="form-group">
+                    <select name = "publicationDay" required>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </select>
+                    <select name = "publicationMonth" required>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select name = "publicationYear" required>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                        <option>2027</option>
+                        <option>2028</option>
+                        <option>2029</option>
+                        <option>2030</option>
+                    </select>
+                </div>
+                <span class="error">{{$field.Error}}</span>
+            </div>
+        {{end}}
+
+        {{with $field := field "project.ExpirationDate" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+                <label for="{{$field.Name}}" class="required">Date d'expiration</label>
+                <div class="form-group">
+                    <select name = "expirationDay" required>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </select>
+                    <select name = "expirationMonth" required>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <select name = "expirationYear" required>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                        <option>2027</option>
+                        <option>2028</option>
+                        <option>2029</option>
+                        <option>2030</option>
+                    </select>
+                </div>
+                <span class="error">{{$field.Error}}</span>
+            </div>
+        {{end}}
+        {{with $field := field "project.Description" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+              <label for="{{$field.Name}}" class="required">Description</label>
+              <span class="error">{{$field.Error}}</span>
+              <textarea
+                class="form-control"
+                id="{{$field.Name}}" name="{{$field.Name}}"
+                placeholder="Description"
+                required="required"
+              >{{$field.Flash}}</textarea>
+            </div>
+        {{end}}
+        <button class="btn btn-default" type="submit">Créer le projet</button>
+    </form>
 </div>
 
 {{template "footer.html" .}}

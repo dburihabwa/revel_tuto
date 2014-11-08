@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	"github.com/revel/revel"
 	"going/app/models"
 	"going/app/routes"
@@ -34,29 +33,31 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 
 	project.Validate(c.Validation)
 
+	publicationDate, errPublicationParsing := MakeTime(publicationYear, publicationMonth, publicationDay)
+	c.Validation.Required(errPublicationParsing == nil).Key("project.PublicationDate").
+		Message("Date de publication invalide")
+
+	expirationDate, errExpirationParsing := MakeTime(expirationYear, expirationMonth, expirationDay)
+	c.Validation.Required(errExpirationParsing == nil).Key("project.ExpirationDate").
+		Message("Date d'expiration invalide")
+
+	c.Validation.Required(publicationDate.Before(project.ExpirationDate)).Key("project.PublicationDate").
+		Message("La date d'expiration est antérieure à la date de publication!")
+
+	now := time.Now()
+
+	c.Validation.Required(now.Before(project.ExpirationDate)).Key("project.ExpirationDate").
+		Message("Le date d'expiration de la campagne est antérieure à la date d'aujourd'hui!")
+
+	project.OwnerId = user.Id
+	project.CreationDate = now
+	project.PublicationDate = publicationDate
+	project.ExpirationDate = expirationDate
+
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
 		return c.Redirect(routes.Project.AddProject())
-	}
-
-	project.OwnerId = user.Id
-	project.CreationDate = time.Now()
-	publicationDate, errPublicationParsing := MakeTime(publicationYear, publicationMonth, publicationDay)
-	if errPublicationParsing != nil {
-		panic(errPublicationParsing)
-	}
-	project.PublicationDate = publicationDate
-	expirationDate, errExpirationParsing := MakeTime(expirationYear, expirationMonth, expirationDay)
-	if errExpirationParsing != nil {
-		panic(errExpirationParsing)
-	}
-	project.ExpirationDate = expirationDate
-	if project.PublicationDate.After(project.ExpirationDate) {
-		panic(errors.New("La date d'expiration est antérieure à la date de publication!"))
-	}
-	if project.CreationDate.After(project.ExpirationDate) {
-		panic(errors.New("Le date d'expiration de la campagne est antérieure à la date d'aujourd'hui!"))
 	}
 
 	err := c.Txn.Insert(&project)

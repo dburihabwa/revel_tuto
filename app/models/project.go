@@ -36,5 +36,6 @@ func (project *Project) Validate(v *revel.Validation) {
 
 	v.Check(project.Amount,
 		revel.Required{},
-	)
+		revel.Range{revel.Min{0}, revel.Max{1000000000}},
+	).Message("Le montant doit être compris entre 0 et 1 000 000 000.")
 }
