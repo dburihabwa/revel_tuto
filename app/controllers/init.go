@@ -16,4 +16,12 @@ func init() {
 		today := time.Now()
 		return int(date.Sub(today).Hours() / 24)
 	}
+
+	revel.TemplateFuncs["diff"] = func(a int64, b int64) int64 {
+		return a - b
+	}
+
+	revel.TemplateFuncs["procent"] = func(a int64, b int64) float64 {
+		return (float64(b) / float64(a)) * 100
+	}
 }
