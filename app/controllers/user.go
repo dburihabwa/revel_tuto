@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"code.google.com/p/go.crypto/bcrypt"
+	"errors"
 	"github.com/revel/revel"
 	"going/app/models"
 	"going/app/routes"
@@ -56,6 +57,21 @@ func (c User) SaveUser(user models.User, verifyPassword string) revel.Result {
 	c.Flash.Success("Welcome, " + user.FirstName)
 	// redirect the user
 	return c.Redirect(routes.Projects.List())
+}
+
+/**
+ * Delete a user
+ */
+func (c User) DeleteUser(Username string) revel.Result {
+	user := c.getUser(Username)
+	if user == nil {
+		c.RenderError(errors.New("User not found"))
+	}
+	_, err := c.Txn.Exec("delete from User where id=?", user.Id)
+	if err != nil {
+		panic(err)
+	}
+	return c.Redirect(routes.Application.Index())
 }
 
 /**

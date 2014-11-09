@@ -15,7 +15,7 @@ POST    /login                                  User.Login
 GET     /logout                                 User.Logout
 GET     /register                               User.Register
 POST    /register                               User.SaveUser
-
+DELETE  /user/:Username                         User.deleteUser
 GET     /profile                                User.Profile
 GET     /profile/history                        User.History
 
