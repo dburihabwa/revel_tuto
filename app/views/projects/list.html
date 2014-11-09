@@ -14,14 +14,14 @@
           <p class="description">{{.Description}}</p>
           <div class="progress-money">{{.Pledged}} €</div>
           <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{procent .Amount .Pledged}}" aria-valuemin="0" aria-valuemax="100" style="width: {{procent .Amount .Pledged}}%;">
-              <span class="sr-only">{{procent .Amount .Pledged}}% Complete</span>
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{percentMax .Amount .Pledged 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentMax .Amount .Pledged 100}}%;">
+              <span class="sr-only">{{percent .Amount .Pledged}}% Complete</span>
             </div>
           </div>
-          <div class="progress-procent">{{procent .Amount .Pledged}}%</div>
+          <div class="progress-procent">{{percent .Amount .Pledged}}%</div>
           <div class="progress-date">{{dayLeft  .ExpirationDate}}  jours</div>
           <div class="clear"></div>
-          <p><a class="btn btn-default" href="{{url "Project.Index" .Id}}" role="button">View details »</a></p>
+          <p><a class="btn btn-default" href="{{url "Project.Index" .Id}}" role="button">Détails »</a></p>
         </div>
       </div><!-- /.col-lg-4 -->
       {{end}}
