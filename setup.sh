@@ -1,9 +1,12 @@
 #! /bin/bash
 
+ROOT=~/
+# ROOT=/gfs/$(whoami)/
+
 echo "mkdir ~/gocode"
-mkdir ~/gocode
+mkdir $(ROOT)/gocode
 touch ~/.gorc
-GOPATH=~/gocode
+GOPATH=$(ROOT)/gocode
 export GOPATH=$GOPATH
 echo "export GOPATH=$GOPATH" > ~/.gorc
 
@@ -17,3 +20,7 @@ echo "export PATH=$PATH" >> ~/.gorc
 echo "" >> ~/.bashrc
 echo "# GO CODE" >> ~/.bashrc
 echo "source ~/.gorc" >> ~/.bashrc
+
+# Download code
+cd $GOPATH/src
+git clone https://github.com/dburihabwa/revel_tuto going
