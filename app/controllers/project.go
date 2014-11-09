@@ -27,14 +27,14 @@ func (c Project) Index(Id int64) revel.Result {
 	project := obj.(*models.Project)
 
 	// count the number of contributors
-	results, err := c.Txn.SelectInt("select count(DISTINCT user_id) from transaction WHERE project_id=?", Id)
+	results, err := c.Txn.SelectInt("select count(DISTINCT user_id) from Transaction WHERE project_id=?", Id)
 	var nbPledge int64 = 0
 	if err == nil {
 		nbPledge = results
 	}
 
 	// count the total amount pledged
-	sumResults, err := c.Txn.SelectInt("select sum(amount) from transaction WHERE project_id=?", Id)
+	sumResults, err := c.Txn.SelectInt("select sum(amount) from Transaction WHERE project_id=?", Id)
 	var pledged int64 = 0
 	if err == nil {
 		pledged = sumResults

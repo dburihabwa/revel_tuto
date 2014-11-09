@@ -26,7 +26,7 @@ func (c Projects) List() revel.Result {
 		b := r.(*models.Project)
 		b.Pledged = 0
 		// get the pledged amount of the project
-		results, err := c.Txn.SelectInt("select sum(amount) from transaction WHERE project_id=?", b.Id)
+		results, err := c.Txn.SelectInt("select sum(amount) from Transaction WHERE project_id=?", b.Id)
 		if err == nil {
 			b.Pledged = results
 		}

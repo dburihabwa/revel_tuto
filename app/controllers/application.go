@@ -17,7 +17,7 @@ func (c Application) Index() revel.Result {
 
 	// Get popular projects
 	results, err := c.Txn.Select(models.Project{},
-		`select DISTINCT p.* from Project p INNER JOIN transaction t on t.project_id=p.id WHERE p.expiration_date > NOW() GROUP BY p.id ORDER BY count(t.user_id) DESC LIMIT 3`)
+		`select DISTINCT p.* from Project p INNER JOIN Transaction t on t.project_id=p.id WHERE p.expiration_date > NOW() GROUP BY p.id ORDER BY count(t.user_id) DESC LIMIT 3`)
 	if err != nil {
 		panic(err)
 	}
@@ -27,7 +27,7 @@ func (c Application) Index() revel.Result {
 		b := r.(*models.Project)
 		b.Pledged = 0
 		// get the pledged amount
-		results, err := c.Txn.SelectInt("select sum(amount) from transaction WHERE project_id=?", b.Id)
+		results, err := c.Txn.SelectInt("select sum(amount) from Transaction WHERE project_id=?", b.Id)
 		if err == nil {
 			b.Pledged = results
 		}
