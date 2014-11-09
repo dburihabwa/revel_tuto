@@ -61,7 +61,7 @@ func (c Project) Reward(transaction models.Transaction, amount int64, projectId 
 func (c Project) AddProject() revel.Result {
 	user := c.connected()
 	if user == nil {
-		return c.Render(routes.Application.Index)
+		return c.Redirect(routes.User.LoginPage())
 	}
 	return c.Render()
 }
