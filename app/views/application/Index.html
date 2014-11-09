@@ -35,7 +35,7 @@
   </div>
   <div class="carousel-over">
     <div class="carousel-caption">
-      <p><a class="btn btn-lg btn-primary" href="#" role="button">Je crée mon project</a></p>
+      <p><a class="btn btn-lg btn-primary" href="{{url "Project.AddProject"}}" role="button">Je crée mon project</a></p>
     </div>
   </div>
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
@@ -46,57 +46,25 @@
   <h2>Projets populaires</h2>
   <!-- Three columns of text below the carousel -->
   <div class="row highlight-projects">
+    {{range .projects}}
     <div class="col-sm-4">
       <div class="highlight-project">
         <img src="http://dummyimage.com/100x50/454545/fff.png" alt="Generic placeholder image">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <div class="progress-money">523,34 €</div>
+        <h2>{{.Title}}</h2>
+        <p class="description">{{.Description}}</p>
+        <div class="progress-money">{{.Pledged}} €</div>
         <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            <span class="sr-only">60% Complete</span>
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{percentMax .Amount .Pledged 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentMax .Amount .Pledged 100}}%;">
+            <span class="sr-only">{{percent .Amount .Pledged}}% Complete</span>
           </div>
         </div>
-        <div class="progress-procent">50%</div>
-        <div class="progress-date">39 jours</div>
+        <div class="progress-procent">{{percent .Amount .Pledged}}%</div>
+        <div class="progress-date">{{dayLeft  .ExpirationDate}}  jours</div>
         <div class="clear"></div>
-        <p><a class="btn btn-default" href="{{url "Project.Index" "123"}}" role="button">View details »</a></p>
+        <p><a class="btn btn-default" href="{{url "Project.Index" .Id}}" role="button">Détails »</a></p>
       </div>
     </div><!-- /.col-lg-4 -->
-    <div class="col-sm-4">
-      <div class="highlight-project">
-        <img src="http://dummyimage.com/100x50/454545/fff.png" alt="Generic placeholder image">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <div class="progress-money">523,34 €</div>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            <span class="sr-only">60% Complete</span>
-          </div>
-        </div>
-        <div class="progress-procent">50%</div>
-        <div class="progress-date">39 jours</div>
-        <div class="clear"></div>
-        <p><a class="btn btn-default" href="{{url "Project.Index" "123"}}" role="button">View details »</a></p>
-      </div>
-    </div><!-- /.col-lg-4 -->
-    <div class="col-sm-4">
-      <div class="highlight-project">
-        <img src="http://dummyimage.com/100x50/454545/fff.png" alt="Generic placeholder image">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <div class="progress-money">523,34 €</div>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            <span class="sr-only">60% Complete</span>
-          </div>
-        </div>
-        <div class="progress-procent">50%</div>
-        <div class="progress-date">39 jours</div>
-        <div class="clear"></div>
-        <p><a class="btn btn-default" href="{{url "Project.Index" "123"}}" role="button">View details »</a></p>
-      </div>
-    </div><!-- /.col-lg-4 -->
+    {{end}}
   </div><!-- /.row -->
 
 </div>
