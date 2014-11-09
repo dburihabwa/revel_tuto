@@ -1,0 +1,44 @@
+{{set . "title" "Add offers"}}
+{{append . "moreScripts" "js/editor/marked.js"}}
+{{append . "moreScripts" "js/editor/editor.js"}}
+{{append . "moreScripts" "js/projectEditor.js"}}
+{{append . "moreStyles" "js/editor/style.css"}}
+{{template "header.html" .}}
+
+<div class="container">
+    <h1>Ajoutez vos offres et les récompenses correspondantes</h1>
+	<p>ajoutez vos récompenses</p>
+    <form role = "form" method = "POST" action = "{{url "Offers.SaveOffers"}}">
+		 <input name="offer.ProjectId" type="hidden" value="{{.projectId}}"/>
+        {{with $field := field "offer.Price" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+              <label for="{{$field.Name}}" class="required">Valeur</label>
+              <input 
+                class="form-control"
+                id="{{$field.Name}}" name="{{$field.Name}}"
+                type="number" 
+                value="{{$field.Flash}}"
+                required="required"
+                autofocus="">
+              <span class="error">{{$field.Error}}</span>
+            </div>
+        {{end}}
+        {{with $field := field "offer.Description" .}}
+            <div class="form-group {{$field.ErrorClass}}">
+              <label for="{{$field.Name}}" class="required">Description</label>
+              <span class="error">{{$field.Error}}</span>
+              <textarea
+                class="form-control"
+                id="{{$field.Name}}" name="{{$field.Name}}"
+                placeholder="Description"
+                required="required"
+              >{{$field.Flash}}</textarea>
+            </div>
+        {{end}}
+        <button class="btn btn-default" type="submit">Ajouter une offre</button>
+    </form>
+	<a href="/project/{{.projectId}}" ><br />quand toutes vos récompenses ont étées ajoutées cliquer ici pour consulter le projet<br /></a>
+
+</div>
+
+{{template "footer.html" .}}

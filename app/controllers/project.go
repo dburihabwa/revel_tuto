@@ -4,7 +4,6 @@ import (
 	"github.com/revel/revel"
 	"going/app/models"
 	"going/app/routes"
-	"strconv"
 	"time"
 )
 
@@ -130,7 +129,7 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 	if err != nil {
 		panic(err)
 	}
-	return c.Redirect(routes.Project.Index(project.Id))
+	return c.Redirect(routes.Offers.AddOffers(project.Id))
 }
 
 /**
@@ -152,13 +151,3 @@ func MakeTime(yearString string, monthString string, dayString string) (time.Tim
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.FixedZone("Europe/Paris", 0)), nil
 }
 
-/**
- * Parse string to int
- */
-func ParseStringToInt(str string) (int, error) {
-	i64, err := strconv.ParseInt(str, 10, 0)
-	if err != nil {
-		return 0, err
-	}
-	return int(i64), nil
-}
