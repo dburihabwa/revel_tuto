@@ -17,7 +17,7 @@ GET     /register                               User.Register
 POST    /register                               User.SaveUser
 
 GET     /profile                                User.Profile
-GET     /profile/hostory                        User.History
+GET     /profile/history                        User.History
 
 GET     /public/*filepath                       Static.Serve("public")
 GET     /favicon.ico                            Static.Serve("public/img","favicon.png")

@@ -108,6 +108,28 @@ func (c User) Logout() revel.Result {
  * Display the history of the user
  */
 func (c User) History() revel.Result {
+	user := c.connected()
+	if user == nil {
+		return c.Redirect(routes.Application.Index())
+	}
+	var transactions []models.Transaction
+	_, err := c.Txn.Select(&transactions, `select * from Transaction where user_id = ? order by date;`, user.Id)
+	if err != nil {
+		panic(err)
+	}
 
-	return nil
+	var total int64 = 0
+
+	for index, transaction := range transactions {
+		var project models.Project
+		err := c.Txn.SelectOne(&project, `select * from Project where id = ?`, transaction.ProjectId)
+		if err != nil {
+			panic(err)
+		}
+		transaction.Project = project
+		transactions[index] = transaction
+		total += transaction.Amount
+	}
+
+	return c.Render(transactions, total)
 }
