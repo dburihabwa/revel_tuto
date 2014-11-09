@@ -12,6 +12,10 @@ type User struct {
 }
 
 func (c User) Profile() revel.Result {
+	user := c.connected()
+	if user == nil {
+		return c.Redirect(routes.User.LoginPage())
+	}
 	return c.Render()
 }
 
