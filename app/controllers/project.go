@@ -84,12 +84,12 @@ func (c Project) SaveProject(project models.Project, publicationDay string, publ
 	c.Validation.Required(errExpirationParsing == nil).Key("project.ExpirationDate").
 		Message("Date d'expiration invalide")
 
-	c.Validation.Required(publicationDate.Before(project.ExpirationDate)).Key("project.PublicationDate").
+	c.Validation.Required(publicationDate.Before(expirationDate)).Key("project.PublicationDate").
 		Message("La date d'expiration est antérieure à la date de publication!")
 
 	now := time.Now()
 
-	c.Validation.Required(now.Before(project.ExpirationDate)).Key("project.ExpirationDate").
+	c.Validation.Required(now.Before(expirationDate)).Key("project.ExpirationDate").
 		Message("Le date d'expiration de la campagne est antérieure à la date d'aujourd'hui!")
 
 	project.OwnerId = user.Id
