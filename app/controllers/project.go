@@ -16,11 +16,10 @@ func (c Project) Index(Id int64) revel.Result {
 	c.connected()
 
 	obj, err := c.Txn.Get(models.Project{}, Id)
-	project := obj.(*models.Project)
-
-	if err != nil {
+	if err != nil || obj == nil {
 		return c.NotFound("Project not found.")
 	}
+	project := obj.(*models.Project)
 
 	results, err := c.Txn.SelectInt("select count(DISTINCT user_id) from transaction WHERE project_id=?", Id)
 	var nbPledge int64 = 0
