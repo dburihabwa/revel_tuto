@@ -22,12 +22,14 @@
     <span>objectif</span>
     <h3 class="days">{{dayLeft  .project.ExpirationDate}}</h3>
     <span>jours restants</span>
-    <h2>Contribuer</h2>
-    <form class="form-signin" role="form" action="{{url "Project.Reward"}}" method="POST">
-        <input type="hidden" name="projectId" value="{{.project.Id}}">
-        <input type="integer" class="form-control" placeholder="Montant" required="" autofocus="" name="amount" size="19" value="{{.flash.amount}}" autofocus/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button>
-    </form>
+    {{if .user}}
+      <h2>Contribuer</h2>
+      <form class="form-signin" role="form" action="{{url "Project.Reward"}}" method="POST">
+          <input type="hidden" name="projectId" value="{{.project.Id}}">
+          <input type="integer" class="form-control" placeholder="Montant" required="" autofocus="" name="amount" size="19" value="{{.flash.amount}}" autofocus/>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button>
+      </form>
+    {{end}}
     </div>
   </div>
 </div>
