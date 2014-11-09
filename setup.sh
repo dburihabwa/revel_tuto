@@ -4,9 +4,9 @@ ROOT=~/
 # ROOT=/gfs/$(whoami)/
 
 echo "mkdir ~/gocode"
-mkdir $(ROOT)/gocode
+mkdir $ROOT/gocode
 touch ~/.gorc
-GOPATH=$(ROOT)/gocode
+GOPATH=$ROOT/gocode
 export GOPATH=$GOPATH
 echo "export GOPATH=$GOPATH" > ~/.gorc
 
