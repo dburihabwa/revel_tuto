@@ -13,7 +13,7 @@ func (c Projects) List() revel.Result {
 	c.connected()
 
 	results, err := c.Txn.Select(models.Project{},
-		`select * from Project`)
+		`select * from Project WHERE expiration_date > NOW()`)
 	if err != nil {
 		panic(err)
 	}
