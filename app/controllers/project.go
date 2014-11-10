@@ -43,31 +43,43 @@ func (c Project) Index(Id int64) revel.Result {
 	ownerResult, err := c.Txn.Get(models.User{}, project.OwnerId)
 	owner := ownerResult.(*models.User)
 
+	// get project offers
+	offers, err := c.Txn.Select(models.Offer{},
+		`select * from Offer WHERE project_id = ?`, Id)
+	if err != nil {
+		panic(err)
+	}
+
 	// display the page
-	return c.Render(project, nbPledge, pledged, owner)
+	return c.Render(project, nbPledge, pledged, owner, offers)
 }
 
 /**
  * Reward a project
  */
-func (c Project) Reward(transaction models.Transaction, amount int64, projectId int64) revel.Result {
+func (c Project) Reward(transaction models.Transaction, offerId int64) revel.Result {
 	// checks if the current user is connected
 	user := c.connected()
 	if user == nil {
 		return c.RenderText("Not conected")
 	}
+	obj, err := c.Txn.Get(models.Offer{}, offerId)
+	if err != nil {
+		panic(err)
+	}
+	offer := obj.(*models.Offer)
 	// create the transaction
 	transaction.UserId = user.Id
-	transaction.ProjectId = projectId
-	transaction.Amount = amount
+	transaction.ProjectId = offer.ProjectId
+	transaction.Amount = offer.Price
 	transaction.Date = time.Now()
 	// insert the transaction
-	err := c.Txn.Insert(&transaction)
+	err = c.Txn.Insert(&transaction)
 	if err != nil {
 		panic(err)
 	}
 	// redirect the user to the project page
-	return c.Redirect(routes.Project.Index(projectId))
+	return c.Redirect(routes.Project.Index(offer.ProjectId))
 }
 
 /**
@@ -150,4 +162,3 @@ func MakeTime(yearString string, monthString string, dayString string) (time.Tim
 	}
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.FixedZone("Europe/Paris", 0)), nil
 }
-
