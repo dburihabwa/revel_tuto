@@ -10,6 +10,8 @@ GET     /project/:Id                            Project.Index
 POST    /project/save                           Project.SaveProject
 POST    /project/reward                         Project.Reward
 
+GET	/offers/:projectId			Offers.AddOffers
+
 Get     /login                                  User.LoginPage
 POST    /login                                  User.Login
 GET     /logout                                 User.Logout
